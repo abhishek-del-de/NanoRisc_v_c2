@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NanoRISCV-C2: Interactive Cycle Waveform Viewer</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 20px; background-color: #f8f9fa; color: #333; }
+        h1 { color: #004085; }
+        .header { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; font-size: 13px; }
+        th, td { padding: 8px 12px; text-align: center; border-bottom: 1px solid #e9ecef; }
+        th { background-color: #004085; color: white; position: sticky; top: 0; }
+        tr:hover { background-color: #f1f8ff; }
+        .badge { padding: 3px 6px; border-radius: 4px; font-weight: bold; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>NanoRISCV-C2: 2-Stage Pipeline Cycle-Accurate Execution Waveform</h1>
+        <p><strong>Target ISA:</strong> RV32I Base Integer | <strong>Pipeline:</strong> 2-Stage (IF | EX/MEM/WB) | <strong>Total Retired:</strong> 75 Instructions | <strong>Cycles:</strong> 89 | <strong>CPI:</strong> 1.187</p>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Cycle</th>
+                <th>Fetch PC (pc_f)</th>
+                <th>Stage 2 PC (pc_d)</th>
+                <th>Instruction</th>
+                <th>Valid</th>
+                <th>Flush</th>
+                <th>RegWr</th>
+                <th>Dest (rd)</th>
+                <th>Write Data</th>
+                <th>ALU Result</th>
+                <th>Memory</th>
+                <th>Branch</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        <tr>
+            <td>1</td>
+            <td>0x00</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>2</td>
+            <td>0x04</td>
+            <td>0x00</td>
+            <td>ADDI x1,10</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x1</td>
+            <td>0xA</td>
+            <td>0xA</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>3</td>
+            <td>0x08</td>
+            <td>0x04</td>
+            <td>ADDI x2,0</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x2</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>4</td>
+            <td>0x0C</td>
+            <td>0x08</td>
+            <td>ADDI x3,0</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x3</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>5</td>
+            <td>0x10</td>
+            <td>0x0C</td>
+            <td>ADDI x4,5</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x4</td>
+            <td>0x5</td>
+            <td>0x5</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>6</td>
+            <td>0x14</td>
+            <td>0x10</td>
+            <td>ADDI x5,256</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x5</td>
+            <td>0x100</td>
+            <td>0x100</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>7</td>
+            <td>0x18</td>
+            <td>0x14</td>
+            <td>BEQ x2,x1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0xFFFFFFF6</td>
+            <td>-</td>
+            <td>UNTKN</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>8</td>
+            <td>0x1C</td>
+            <td>0x18</td>
+            <td>ADD x3,x3,x4</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x3</td>
+            <td>0x5</td>
+            <td>0x5</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>9</td>
+            <td>0x20</td>
+            <td>0x1C</td>
+            <td>ADDI x2,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x2</td>
+            <td>0x1</td>
+            <td>0x1</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>10</td>
+            <td>0x24</td>
+            <td>0x20</td>
+            <td>ANDI x6,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x6</td>
+            <td>0x1</td>
+            <td>0x1</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>11</td>
+            <td>0x28</td>
+            <td>0x24</td>
+            <td>XORI x7,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x7</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>12</td>
+            <td>0x2C</td>
+            <td>0x28</td>
+            <td>JAL x0,-20</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>13</td>
+            <td>0x14</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>14</td>
+            <td>0x18</td>
+            <td>0x14</td>
+            <td>BEQ x2,x1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0xFFFFFFF7</td>
+            <td>-</td>
+            <td>UNTKN</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>15</td>
+            <td>0x1C</td>
+            <td>0x18</td>
+            <td>ADD x3,x3,x4</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x3</td>
+            <td>0xA</td>
+            <td>0xA</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>16</td>
+            <td>0x20</td>
+            <td>0x1C</td>
+            <td>ADDI x2,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x2</td>
+            <td>0x2</td>
+            <td>0x2</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>17</td>
+            <td>0x24</td>
+            <td>0x20</td>
+            <td>ANDI x6,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x6</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>18</td>
+            <td>0x28</td>
+            <td>0x24</td>
+            <td>XORI x7,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x7</td>
+            <td>0x1</td>
+            <td>0x1</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>19</td>
+            <td>0x2C</td>
+            <td>0x28</td>
+            <td>JAL x0,-20</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>20</td>
+            <td>0x14</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>21</td>
+            <td>0x18</td>
+            <td>0x14</td>
+            <td>BEQ x2,x1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0xFFFFFFF8</td>
+            <td>-</td>
+            <td>UNTKN</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>22</td>
+            <td>0x1C</td>
+            <td>0x18</td>
+            <td>ADD x3,x3,x4</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x3</td>
+            <td>0xF</td>
+            <td>0xF</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>23</td>
+            <td>0x20</td>
+            <td>0x1C</td>
+            <td>ADDI x2,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x2</td>
+            <td>0x3</td>
+            <td>0x3</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>24</td>
+            <td>0x24</td>
+            <td>0x20</td>
+            <td>ANDI x6,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x6</td>
+            <td>0x1</td>
+            <td>0x1</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>25</td>
+            <td>0x28</td>
+            <td>0x24</td>
+            <td>XORI x7,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x7</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>26</td>
+            <td>0x2C</td>
+            <td>0x28</td>
+            <td>JAL x0,-20</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>27</td>
+            <td>0x14</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>28</td>
+            <td>0x18</td>
+            <td>0x14</td>
+            <td>BEQ x2,x1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0xFFFFFFF9</td>
+            <td>-</td>
+            <td>UNTKN</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>29</td>
+            <td>0x1C</td>
+            <td>0x18</td>
+            <td>ADD x3,x3,x4</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x3</td>
+            <td>0x14</td>
+            <td>0x14</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>30</td>
+            <td>0x20</td>
+            <td>0x1C</td>
+            <td>ADDI x2,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x2</td>
+            <td>0x4</td>
+            <td>0x4</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>31</td>
+            <td>0x24</td>
+            <td>0x20</td>
+            <td>ANDI x6,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x6</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>32</td>
+            <td>0x28</td>
+            <td>0x24</td>
+            <td>XORI x7,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x7</td>
+            <td>0x1</td>
+            <td>0x1</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>33</td>
+            <td>0x2C</td>
+            <td>0x28</td>
+            <td>JAL x0,-20</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>34</td>
+            <td>0x14</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>35</td>
+            <td>0x18</td>
+            <td>0x14</td>
+            <td>BEQ x2,x1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0xFFFFFFFA</td>
+            <td>-</td>
+            <td>UNTKN</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>36</td>
+            <td>0x1C</td>
+            <td>0x18</td>
+            <td>ADD x3,x3,x4</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x3</td>
+            <td>0x19</td>
+            <td>0x19</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>37</td>
+            <td>0x20</td>
+            <td>0x1C</td>
+            <td>ADDI x2,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x2</td>
+            <td>0x5</td>
+            <td>0x5</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>38</td>
+            <td>0x24</td>
+            <td>0x20</td>
+            <td>ANDI x6,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x6</td>
+            <td>0x1</td>
+            <td>0x1</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>39</td>
+            <td>0x28</td>
+            <td>0x24</td>
+            <td>XORI x7,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x7</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>40</td>
+            <td>0x2C</td>
+            <td>0x28</td>
+            <td>JAL x0,-20</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>41</td>
+            <td>0x14</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>42</td>
+            <td>0x18</td>
+            <td>0x14</td>
+            <td>BEQ x2,x1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0xFFFFFFFB</td>
+            <td>-</td>
+            <td>UNTKN</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>43</td>
+            <td>0x1C</td>
+            <td>0x18</td>
+            <td>ADD x3,x3,x4</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x3</td>
+            <td>0x1E</td>
+            <td>0x1E</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>44</td>
+            <td>0x20</td>
+            <td>0x1C</td>
+            <td>ADDI x2,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x2</td>
+            <td>0x6</td>
+            <td>0x6</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>45</td>
+            <td>0x24</td>
+            <td>0x20</td>
+            <td>ANDI x6,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x6</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>46</td>
+            <td>0x28</td>
+            <td>0x24</td>
+            <td>XORI x7,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x7</td>
+            <td>0x1</td>
+            <td>0x1</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>47</td>
+            <td>0x2C</td>
+            <td>0x28</td>
+            <td>JAL x0,-20</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>48</td>
+            <td>0x14</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>49</td>
+            <td>0x18</td>
+            <td>0x14</td>
+            <td>BEQ x2,x1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0xFFFFFFFC</td>
+            <td>-</td>
+            <td>UNTKN</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>50</td>
+            <td>0x1C</td>
+            <td>0x18</td>
+            <td>ADD x3,x3,x4</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x3</td>
+            <td>0x23</td>
+            <td>0x23</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>51</td>
+            <td>0x20</td>
+            <td>0x1C</td>
+            <td>ADDI x2,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x2</td>
+            <td>0x7</td>
+            <td>0x7</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>52</td>
+            <td>0x24</td>
+            <td>0x20</td>
+            <td>ANDI x6,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x6</td>
+            <td>0x1</td>
+            <td>0x1</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>53</td>
+            <td>0x28</td>
+            <td>0x24</td>
+            <td>XORI x7,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x7</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>54</td>
+            <td>0x2C</td>
+            <td>0x28</td>
+            <td>JAL x0,-20</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>55</td>
+            <td>0x14</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>56</td>
+            <td>0x18</td>
+            <td>0x14</td>
+            <td>BEQ x2,x1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0xFFFFFFFD</td>
+            <td>-</td>
+            <td>UNTKN</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>57</td>
+            <td>0x1C</td>
+            <td>0x18</td>
+            <td>ADD x3,x3,x4</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x3</td>
+            <td>0x28</td>
+            <td>0x28</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>58</td>
+            <td>0x20</td>
+            <td>0x1C</td>
+            <td>ADDI x2,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x2</td>
+            <td>0x8</td>
+            <td>0x8</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>59</td>
+            <td>0x24</td>
+            <td>0x20</td>
+            <td>ANDI x6,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x6</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>60</td>
+            <td>0x28</td>
+            <td>0x24</td>
+            <td>XORI x7,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x7</td>
+            <td>0x1</td>
+            <td>0x1</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>61</td>
+            <td>0x2C</td>
+            <td>0x28</td>
+            <td>JAL x0,-20</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>62</td>
+            <td>0x14</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>63</td>
+            <td>0x18</td>
+            <td>0x14</td>
+            <td>BEQ x2,x1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0xFFFFFFFE</td>
+            <td>-</td>
+            <td>UNTKN</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>64</td>
+            <td>0x1C</td>
+            <td>0x18</td>
+            <td>ADD x3,x3,x4</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x3</td>
+            <td>0x2D</td>
+            <td>0x2D</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>65</td>
+            <td>0x20</td>
+            <td>0x1C</td>
+            <td>ADDI x2,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x2</td>
+            <td>0x9</td>
+            <td>0x9</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>66</td>
+            <td>0x24</td>
+            <td>0x20</td>
+            <td>ANDI x6,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x6</td>
+            <td>0x1</td>
+            <td>0x1</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>67</td>
+            <td>0x28</td>
+            <td>0x24</td>
+            <td>XORI x7,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x7</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>68</td>
+            <td>0x2C</td>
+            <td>0x28</td>
+            <td>JAL x0,-20</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>69</td>
+            <td>0x14</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>70</td>
+            <td>0x18</td>
+            <td>0x14</td>
+            <td>BEQ x2,x1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0xFFFFFFFF</td>
+            <td>-</td>
+            <td>UNTKN</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>71</td>
+            <td>0x1C</td>
+            <td>0x18</td>
+            <td>ADD x3,x3,x4</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x3</td>
+            <td>0x32</td>
+            <td>0x32</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>72</td>
+            <td>0x20</td>
+            <td>0x1C</td>
+            <td>ADDI x2,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x2</td>
+            <td>0xA</td>
+            <td>0xA</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>73</td>
+            <td>0x24</td>
+            <td>0x20</td>
+            <td>ANDI x6,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x6</td>
+            <td>0x0</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>74</td>
+            <td>0x28</td>
+            <td>0x24</td>
+            <td>XORI x7,1</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x7</td>
+            <td>0x1</td>
+            <td>0x1</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>75</td>
+            <td>0x2C</td>
+            <td>0x28</td>
+            <td>JAL x0,-20</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>76</td>
+            <td>0x14</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>77</td>
+            <td>0x18</td>
+            <td>0x14</td>
+            <td>BEQ x2,x1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td><span style="color:orange;font-weight:bold;">TAKEN</span></td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>78</td>
+            <td>0x30</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>79</td>
+            <td>0x34</td>
+            <td>0x30</td>
+            <td>SW x3,0(x5)</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x100</td>
+            <td>SW @256</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>80</td>
+            <td>0x38</td>
+            <td>0x34</td>
+            <td>LW x8,0(x5)</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x8</td>
+            <td>0x32</td>
+            <td>0x100</td>
+            <td>LW @256</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>81</td>
+            <td>0x3C</td>
+            <td>0x38</td>
+            <td>SUB x9,x8,x4</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x9</td>
+            <td>0x2D</td>
+            <td>0x2D</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>82</td>
+            <td>0x40</td>
+            <td>0x3C</td>
+            <td>SLLI x10,2</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x10</td>
+            <td>0xB4</td>
+            <td>0xB4</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>83</td>
+            <td>0x44</td>
+            <td>0x40</td>
+            <td>SW x10,4(x5)</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x104</td>
+            <td>SW @260</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>84</td>
+            <td>0x48</td>
+            <td>0x44</td>
+            <td>JAL x1,16</td>
+            <td>1</td>
+            <td>1</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x1</td>
+            <td>0x48</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>85</td>
+            <td>0x54</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>86</td>
+            <td>0x58</td>
+            <td>0x54</td>
+            <td>ADDI x11,42</td>
+            <td>1</td>
+            <td>0</td>
+            <td><span style="color:purple;font-weight:bold;">1</span></td>
+            <td>x11</td>
+            <td>0x2A</td>
+            <td>0x2A</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>87</td>
+            <td>0x5C</td>
+            <td>0x58</td>
+            <td>JALR x0,0(x1)</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>88</td>
+            <td>0x48</td>
+            <td>0x00</td>
+            <td><span style="color:red;font-weight:bold;">[FLUSH BUBBLE]</span></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>RUN</td>
+        </tr>
+        
+        <tr>
+            <td>89</td>
+            <td>0x4C</td>
+            <td>0x48</td>
+            <td>EBREAK</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0x0</td>
+            <td>-</td>
+            <td>-</td>
+            <td><span style="color:red;font-weight:bold;">HALTED</span></td>
+        </tr>
+        
+        </tbody>
+    </table>
+</body>
+</html>

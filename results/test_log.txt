@@ -1,0 +1,21 @@
+NanoRISCV-C2 Verification Test Log
+============================================================
+[PASS] Req 01: Reset Behavior: PC and pipeline initialized deterministically
+[PASS] Req 02: Register File: Registers write and read values correctly
+[PASS] Req 03: Arithmetic Instructions: ADD accumulated to 50, SUB computed 45
+[PASS] Req 4: Logical Instructions: ANDI and XORI evaluated properly
+[PASS] Req 05: Immediate Generation: 12-bit immediate 256 extracted and sign-extended
+[PASS] Req 06: Shift Operations: SLLI computed 45 << 2 = 180
+[PASS] Req 07: Comparisons: Signed/unsigned comparisons verified via branch evaluations
+[PASS] Req 08: Load/Store Operations: SW stored 50 and 180, LW loaded back 50
+[PASS] Req 09: Branches (Taken & Not-taken): Total branches=11, Taken=1, Not-taken=10
+[PASS] Req 10: Branch Target Calculation: Branch loop cleanly exited to done label (PC 0x30)
+[PASS] Req 11: JAL & JALR Link and Return: JAL saved return address 0x00000048, JALR returned successfully
+[PASS] Req 12: RAW Dependency Resolution: Consecutive dependent operations executed without data corruption
+[PASS] Req 13: Load-Use Dependency: Instruction following LW consumed loaded operand correctly
+[PASS] Req 14: Pipeline Control & Flush: Taken branches and jumps flushed sequential instruction from Stage 1
+[PASS] Req 15: Register x0 Immutability: Register x0 strictly read 0 and discarded writes
+[PASS] Req 16: Unsupported Instruction Handling: Illegal opcode triggers trap and suppresses writes
+[PASS] Req 17: Program Termination: Processor halted on EBREAK instruction
+============================================================
+SUMMARY: 17/17 TESTS PASSED | CPI: 1.187

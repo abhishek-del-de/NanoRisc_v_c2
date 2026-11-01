@@ -1,0 +1,13 @@
+NanoRISCV-C2 Performance Summary
+====================================
+Total Instructions Retired: 75
+Total Processor Cycles:    89
+Measured CPI:               1.187
+Branch Total:               11
+Branches Taken:             1 (9.1%)
+Branches Not-Taken:         10
+Load Instructions:          1
+Store Instructions:         2
+ALU Tests:                  30/30 PASSED
+Architecture Checkpoints:   17/17 PASSED
+Status:                     ALL TESTS PASSED

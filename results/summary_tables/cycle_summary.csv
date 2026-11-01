@@ -1,0 +1,2 @@
+Total_Instructions_Retired,Total_Cycles_Consumed,Single_Cycle_Instructions,Multi_Cycle_Instructions,Measured_CPI
+75,89,62,13,1.187

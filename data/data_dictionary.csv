@@ -1,0 +1,10 @@
+column_name,data_type,allowed_values,description,example
+pc,string,"Hex string (0x00000000 - 0xFFFFFFFF)",Program Counter memory address of the executed instruction word,0x00000014
+instruction_hex,string,"Hex string (0x00000000 - 0xFFFFFFFF)",32-bit RV32I machine-code instruction word,0x00110E63
+opcode,string,"Hex string (0x00 - 0x7F)",7-bit major RISC-V opcode determining instruction format,0x63
+rs1,integer,0 - 31,First source register index read from Register File,2
+rs2,integer,0 - 31,Second source register index read from Register File,1
+rd,integer,0 - 31,Destination register index written to Register File (0 for non-writing),3
+cycles_taken,integer,1 - 2,Clock cycles allocated for retirement (including flush penalty for redirects),2
+branch_taken,integer,0 or 1,Branch condition outcome (1 if branch taken; 0 if untaken or non-branch),1
+

@@ -1,0 +1,34 @@
+NanoRISCV-C2 ALU Verification Test Log
+============================================================
+[PASS] ADD: Zero Operands | a=0x00000000, b=0x00000000 -> res=0x00000000, zero=1
+[PASS] ADD: Positive Operands | a=0x0000000F, b=0x00000019 -> res=0x00000028, zero=0
+[PASS] ADD: Negative + Positive | a=0xFFFFFFF6, b=0x0000000A -> res=0x00000000, zero=1
+[PASS] ADD: Two Negatives | a=0xFFFFFFFB, b=0xFFFFFFF1 -> res=0xFFFFFFEC, zero=0
+[PASS] ADD: Max Signed Overflow | a=0x7FFFFFFF, b=0x00000001 -> res=0x80000000, zero=0
+[PASS] ADD: 32-bit Wraparound | a=0xFFFFFFFF, b=0x00000001 -> res=0x00000000, zero=1
+[PASS] SUB: Same Numbers | a=0x00000032, b=0x00000032 -> res=0x00000000, zero=1
+[PASS] SUB: Positive Result | a=0x00000064, b=0x0000001E -> res=0x00000046, zero=0
+[PASS] SUB: Negative Result | a=0x00000014, b=0x00000032 -> res=0xFFFFFFE2, zero=0
+[PASS] SUB: Min Signed Underflow | a=0x80000000, b=0x00000001 -> res=0x7FFFFFFF, zero=0
+[PASS] AND: Masking | a=0xFF00FF00, b=0xF0F0F0F0 -> res=0xF000F000, zero=0
+[PASS] AND: Disjoint | a=0xAAAAAAAA, b=0x55555555 -> res=0x00000000, zero=1
+[PASS] OR:  Combining | a=0xF0000000, b=0x0000000F -> res=0xF000000F, zero=0
+[PASS] XOR: Self-Inversion | a=0x12345678, b=0x12345678 -> res=0x00000000, zero=1
+[PASS] XOR: Toggle Bits | a=0xFFFFFFFF, b=0x0000FFFF -> res=0xFFFF0000, zero=0
+[PASS] SLL: Shift 0 | a=0x00000001, b=0x00000000 -> res=0x00000001, zero=0
+[PASS] SLL: Shift 4 | a=0x00000001, b=0x00000004 -> res=0x00000010, zero=0
+[PASS] SLL: Shift 31 | a=0x00000001, b=0x0000001F -> res=0x80000000, zero=0
+[PASS] SLL: Mask shamt > 31 | a=0x00000001, b=0x00000023 -> res=0x00000008, zero=0
+[PASS] SRL: Shift 4 | a=0x80000000, b=0x00000004 -> res=0x08000000, zero=0
+[PASS] SRA: Positive Sign Shift | a=0x70000000, b=0x00000004 -> res=0x07000000, zero=0
+[PASS] SRA: Negative Sign Extension | a=0x80000000, b=0x00000004 -> res=0xF8000000, zero=0
+[PASS] SRA: Shift 31 on Negative | a=0x80000000, b=0x0000001F -> res=0xFFFFFFFF, zero=0
+[PASS] SLT: Positive < Positive | a=0x0000000A, b=0x00000014 -> res=0x00000001, zero=0
+[PASS] SLT: Negative < Positive | a=0xFFFFFFFB, b=0x00000005 -> res=0x00000001, zero=0
+[PASS] SLT: Positive < Negative | a=0x00000005, b=0xFFFFFFFB -> res=0x00000000, zero=1
+[PASS] SLT: Equal Values | a=0x00000064, b=0x00000064 -> res=0x00000000, zero=1
+[PASS] SLTU: Unsigned Comparison | a=0x00000005, b=0xFFFFFFFF -> res=0x00000001, zero=0
+[PASS] SLTU: High unsigned < Low | a=0xFFFFFFFF, b=0x00000005 -> res=0x00000000, zero=1
+[PASS] COPY_B: Pass immediate | a=0xDEADBEEF, b=0xCAFE1234 -> res=0xCAFE1234, zero=0
+============================================================
+Total: 30 | Passed: 30 | Failed: 0
